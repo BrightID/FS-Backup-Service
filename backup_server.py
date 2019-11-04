@@ -35,4 +35,5 @@ def set():
     return jsonify(success=True)
 
 if __name__ == '__main__':
+    if not exists(DIR): mkdir(DIR)
     app.run(host='0.0.0.0', port=5001, threaded=True, debug=False)
