@@ -7,21 +7,19 @@ DIR = '/var/opt/recovery-service/'
 
 app = Flask(__name__)
 
-@app.route('/backup/<key1>/<key2>', methods=['GET'])
+@app.route('/backups/<key1>/<key2>', methods=['GET'])
 def get(key1, key2):
-    if not key1 or not key2:
-        abort(400)
     path = join(DIR, key1, key2)
     if not exists(path):
         abort(404)
     with open(path, 'r') as f:
         return f.read()
 
-@app.route('/backup/<key1>/<key2>', methods=['PUT'])
+@app.route('/backups/<key1>/<key2>', methods=['PUT'])
 def set(key1, key2):
-    data = request.json.get('data', '')
-    if not key1 or not key2:
+    if request.json is None:
         abort(400)
+    data = request.json.get('data', '')
     dpath = join(DIR, key1)
     fpath = join(DIR, key1, key2)
     if not exists(dpath):
