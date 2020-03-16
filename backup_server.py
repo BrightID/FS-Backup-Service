@@ -24,6 +24,8 @@ def set(key1, key2):
     fpath = join(DIR, key1, key2)
     if not exists(dpath):
         mkdir(dpath)
+    if key1 == 'immutable' and exists(fpath):
+        abort(403)
     with open(fpath, 'w') as f:
         f.write(data)
     return jsonify(success=True)
